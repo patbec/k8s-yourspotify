@@ -1,0 +1,70 @@
+# mongo.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: yourspotify
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  namespace: yourspotify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:4.4.16
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "0.5"
+            requests:
+              memory: 128Mi
+              cpu: "0.2"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongo-claim
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-claim
+  namespace: yourspotify
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1000Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: yourspotify
+spec:
+  selector:
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+  type: ClusterIP
