@@ -1,4 +1,4 @@
-# k8s-yourspotify  <img width="10%" align="right" src="./docs/logo.svg"></img>
+# k8s-yourspotify
 
 
 A deployment to host the application [yourspotify](https://github.com/Yooooomi/your_spotify) on Kubernetes.
