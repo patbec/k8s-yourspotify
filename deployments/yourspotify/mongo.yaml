@@ -24,13 +24,6 @@ spec:
       containers:
         - name: mongo
           image: mongo:4.4.16
-          resources:
-            limits:
-              memory: 512Mi
-              cpu: "0.5"
-            requests:
-              memory: 128Mi
-              cpu: "0.2"
           ports:
             - containerPort: 27017
           volumeMounts:

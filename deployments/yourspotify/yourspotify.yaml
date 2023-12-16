@@ -24,13 +24,6 @@ spec:
       containers:
         - name: yourspotify-client
           image: yooooomi/your_spotify_client:1.7.3
-          resources:
-            limits:
-              memory: 256Mi
-              cpu: "0.25"
-            requests:
-              memory: 128Mi
-              cpu: "0.2"
           env:
             - name: API_ENDPOINT
               value: https://yourspotify-backend.k8s.thinkbox.center
@@ -39,13 +32,6 @@ spec:
 
         - name: yourspotify-server
           image: yooooomi/your_spotify_server:1.7.3
-          resources:
-            limits:
-              memory: 256Mi
-              cpu: "0.25"
-            requests:
-              memory: 128Mi
-              cpu: "0.2"
           env:
             - name: API_ENDPOINT
               value: https://yourspotify-backend.k8s.thinkbox.center
