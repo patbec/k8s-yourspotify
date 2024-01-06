@@ -24,6 +24,13 @@ spec:
       containers:
         - name: yourspotify-client
           image: yooooomi/your_spotify_client:1.7.3
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "500m"
+            requests:
+              memory: 256Mi
+              cpu: "25m"
           env:
             - name: API_ENDPOINT
               value: https://yourspotify-backend.k8s.thinkbox.center
@@ -32,6 +39,13 @@ spec:
 
         - name: yourspotify-server
           image: yooooomi/your_spotify_server:1.7.3
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "500m"
+            requests:
+              memory: 256Mi
+              cpu: "25m"
           env:
             - name: API_ENDPOINT
               value: https://yourspotify-backend.k8s.thinkbox.center
@@ -43,12 +57,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: yourspotify-secrets
-                  key: spotify_public
+                  key: SPOTIFY_PUBLIC
             - name: SPOTIFY_SECRET
               valueFrom:
                 secretKeyRef:
                   name: yourspotify-secrets
-                  key: spotify_secret
+                  key: SPOTIFY_SECRET
           ports:
             - containerPort: 8080
 
@@ -60,8 +74,8 @@ metadata:
   namespace: yourspotify
 type: Opaque
 stringData:
-  spotify_public: "<spotify-application-client-id>"
-  spotify_secret: "<spotify-application-client-secret>"
+  SPOTIFY_PUBLIC: "<spotify-application-client-id>"
+  SPOTIFY_SECRET: "<spotify-application-client-secret>"
 
 ---
 apiVersion: v1
